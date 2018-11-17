@@ -69,13 +69,18 @@ args = parser.parse_args()
 if args.list:
     for algo in allAlgos:
         print(algo.name)
+elif args.hash is None:
+    print('You need to enter a hash. Use the -h option for the usage line')
 else:
     matched_hash = findHash(args.hash)
+
+    if len(matched_hash) is 0:
+        print('Sorry, we couldn\'t find the algo used for this hash')
 
     for algo in matched_hash:
         if args.hashcat:
             if algo.hashcat:
-                print(f'{algo.name}: {algo.hashcat}')
+                print(f'{algo.name}: hashcat -m {algo.hashcat} <example400.hash> <example.dict>')
             else:
                 print(f'{algo.name}: there is no Haschat for this algo')
         else:
